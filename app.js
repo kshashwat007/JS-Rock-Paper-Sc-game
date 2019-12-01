@@ -24,10 +24,74 @@ const game = () => {
       option.addEventListener("click", function() {
         const computerNumber = Math.floor(Math.random() * 3);
         const computerChoice = computerOptions[computerNumber];
+        //call compare hands
+
+        compareHands(this.textContent, computerChoice);
+
+        //update images
+        playerHand.src = `./assets/${this.textContent}.png`;
+        computerHand.src = `./assets/${computerChoice}.png`;
       });
     });
   };
 
+  const updateScore = () => {
+    const playerScore = document.querySelector(".player-score p");
+    const computerScore = document.querySelector(".computer-score p");
+
+    playerScore.textContent = pScore;
+    computerScore.textContent = cScore;
+  };
+
+  const compareHands = (playerChoice, computerChoice) => {
+    const winner = document.querySelector(".winner");
+    if (playerChoice === computerChoice) {
+      winner.textContent = "It is a tie!";
+
+      return;
+    }
+    if (playerChoice === "rock") {
+      if (computerChoice === "scissors") {
+        winner.textContent = "Player Wins!";
+        pScore++;
+        updateScore();
+        return;
+      } else {
+        winner.textContent = "Computer Wins!";
+        cScore++;
+        updateScore();
+        return;
+      }
+    }
+
+    if (playerChoice === "paper") {
+      if (computerChoice === "scissors") {
+        winner.textContent = "Computer Wins!";
+        cScore++;
+        updateScore();
+        return;
+      } else {
+        winner.textContent = "Player Wins!";
+        pScore++;
+        updateScore();
+        return;
+      }
+    }
+
+    if (playerChoice === "scissors") {
+      if (computerChoice === "paper") {
+        winner.textContent = "Player Wins!";
+        pScore++;
+        updateScore();
+        return;
+      } else {
+        winner.textContent = "Computer Wins!";
+        cScore++;
+        updateScore();
+        return;
+      }
+    }
+  };
   startGame();
   playMatch();
 };
